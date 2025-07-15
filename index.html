@@ -114,6 +114,25 @@
       document.getElementById("status").textContent = "送信中...";
 
       try {
-        const res = await fetch("https://script.google.com/a/macros/ict.shimanet.ed.jp/s/AKfycbz3KSwA0kEe4AV69nJgXMHD5Oj6rVCgxnhG4R8L_8vTnIOAB8n4Qmh60HNrl9deXD-NlA/exec", {
+        const res = await fetch("https://script.google.com/a/macros/ict.shimanet.ed.jp/s/AKfycbzzGZctvTUd25YCuvvzgsrW-gqHZWHhpgnjOU9ZprD9MrGVHN5XEd4byue5kLPV-BqfMg/exec", {
           method: "POST",
-          headers: { "Content-Type": "application/j
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(order)
+        });
+
+        const result = await res.json();
+        if (result.result === "success") {
+          document.getElementById("status").textContent = "注文を受け付けました！";
+        } else {
+          document.getElementById("status").textContent = "エラー：" + result.message;
+        }
+      } catch (error) {
+        document.getElementById("status").textContent = "通信エラー：" + error;
+      }
+    }
+
+    // LIFF初期化を実行
+    window.onload = initLiff;
+  </script>
+</body>
+</html>
